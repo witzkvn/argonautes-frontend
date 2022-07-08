@@ -1,44 +1,43 @@
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
+import { getBaseUrl } from "../../helpers/getBaseUrl";
 import styles from "./sailor-list.module.css";
 
-// TODO : change online URL below :
-const baseUrl =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3001/api/v1"
-    : "https://urltochange.com";
-
-const SailorList = () => {
+const SailorList = ({ sailors, setSailors }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [sailors, setSailors] = useState([]);
 
-  const fetchSailors = useCallback(async (fetchUrl) => {
-    setError(null);
+  const baseUrl = getBaseUrl();
 
-    try {
-      const response = await fetch(fetchUrl);
-      const data = await response.json();
+  const fetchSailors = useCallback(
+    async (fetchUrl) => {
+      setError(null);
 
-      if (data.data.data) {
-        setSailors([...data.data.data]);
-      } else {
-        setError(
-          "Une erreur est survenue lors de la récupéraation de la liste des marins."
-        );
+      try {
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+
+        if (data.data.sailors) {
+          setSailors([...data.data.sailors]);
+        } else {
+          setError(
+            "Une erreur est survenue lors de la récupéraation de la liste des marins."
+          );
+        }
+      } catch (error) {
+        setError("Une erreur est survenue. Merci de réessayer ultérieurement.");
       }
-    } catch (error) {
-      setError("Une erreur est survenue. Merci de réessayer ultérieurement.");
-    }
-  }, []);
+    },
+    [setSailors]
+  );
 
   useEffect(() => {
     setIsLoading(true);
     fetchSailors(`${baseUrl}/sailors`).then(() => setIsLoading(false));
-  }, [fetchSailors]);
+  }, [baseUrl, fetchSailors]);
 
   if (error) {
-    return <p className={styles.center}>{error}</p>;
+    return <p className="errorText">{error}</p>;
   }
 
   if (isLoading) {
