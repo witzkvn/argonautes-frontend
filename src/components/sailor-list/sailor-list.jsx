@@ -3,30 +3,33 @@ import { useCallback, useEffect, useState } from "react";
 import { getBaseUrl } from "../../helpers/getBaseUrl";
 import styles from "./sailor-list.module.css";
 
-const SailorList = () => {
+const SailorList = ({ sailors, setSailors }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const [sailors, setSailors] = useState([]);
+
   const baseUrl = getBaseUrl();
 
-  const fetchSailors = useCallback(async (fetchUrl) => {
-    setError(null);
+  const fetchSailors = useCallback(
+    async (fetchUrl) => {
+      setError(null);
 
-    try {
-      const response = await fetch(fetchUrl);
-      const data = await response.json();
+      try {
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
 
-      if (data.data.data) {
-        setSailors([...data.data.data]);
-      } else {
-        setError(
-          "Une erreur est survenue lors de la récupéraation de la liste des marins."
-        );
+        if (data.data.sailors) {
+          setSailors([...data.data.sailors]);
+        } else {
+          setError(
+            "Une erreur est survenue lors de la récupéraation de la liste des marins."
+          );
+        }
+      } catch (error) {
+        setError("Une erreur est survenue. Merci de réessayer ultérieurement.");
       }
-    } catch (error) {
-      setError("Une erreur est survenue. Merci de réessayer ultérieurement.");
-    }
-  }, []);
+    },
+    [setSailors]
+  );
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,7 +37,7 @@ const SailorList = () => {
   }, [baseUrl, fetchSailors]);
 
   if (error) {
-    return <p className={styles.center}>{error}</p>;
+    return <p className="errorText">{error}</p>;
   }
 
   if (isLoading) {
