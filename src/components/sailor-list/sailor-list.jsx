@@ -1,6 +1,6 @@
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { getBaseUrl, getHeaders } from "../../helpers/getBaseUrl";
+import { getBaseUrl } from "../../helpers/getBaseUrl";
 import styles from "./sailor-list.module.css";
 
 const SailorList = ({ sailors, setSailors }) => {
@@ -14,9 +14,7 @@ const SailorList = ({ sailors, setSailors }) => {
       setError(null);
 
       try {
-        const response = await fetch(fetchUrl, {
-          headers: getHeaders(),
-        });
+        const response = await fetch(fetchUrl);
         const data = await response.json();
 
         if (data.data.sailors) {

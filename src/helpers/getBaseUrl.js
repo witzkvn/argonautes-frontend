@@ -11,10 +11,3 @@ export const getBaseUrl = () => {
     return null;
   }
 };
-
-export const getHeaders = () => {
-  return {
-    "Access-Control-Allow-Origin": onlineUrl,
-    "Content-Type": "application/json",
-  };
-};
