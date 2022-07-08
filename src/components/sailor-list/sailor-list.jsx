@@ -1,17 +1,13 @@
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
+import { getBaseUrl } from "../../helpers/getBaseUrl";
 import styles from "./sailor-list.module.css";
-
-// TODO : change online URL below :
-const baseUrl =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3001/api/v1"
-    : "https://urltochange.com";
 
 const SailorList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [sailors, setSailors] = useState([]);
+  const baseUrl = getBaseUrl();
 
   const fetchSailors = useCallback(async (fetchUrl) => {
     setError(null);
@@ -35,7 +31,7 @@ const SailorList = () => {
   useEffect(() => {
     setIsLoading(true);
     fetchSailors(`${baseUrl}/sailors`).then(() => setIsLoading(false));
-  }, [fetchSailors]);
+  }, [baseUrl, fetchSailors]);
 
   if (error) {
     return <p className={styles.center}>{error}</p>;
