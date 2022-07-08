@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useRef } from "react";
-import { getBaseUrl } from "../../helpers/getBaseUrl";
+import { getBaseUrl, getHeaders } from "../../helpers/getBaseUrl";
 import styles from "./argonaute-form.module.css";
 
 const SailorForm = ({ updateListWithNewSailorAdded }) => {
@@ -18,9 +18,7 @@ const SailorForm = ({ updateListWithNewSailorAdded }) => {
     try {
       const newSailorRequest = await fetch(`${baseUrl}/sailors/create`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: getHeaders(),
         body: JSON.stringify({ name: newSailorName }),
       });
       const createSailorResponse = await newSailorRequest.json();

@@ -1,9 +1,20 @@
+const localUrl = "http://localhost:3001/api/v1";
+const onlineUrl = "https://argonautes-wcs-back.herokuapp.com/";
+
 export const getBaseUrl = () => {
-  if (process.env.NODE_ENV === "development") {
-    return "http://localhost:3001/api/v1";
-  } else if (process.env.NODE_ENV === "production") {
-    return "https://argonautes-wcs-back.herokuapp.com/";
+  console.log(process.env.REACT_APP_ENV);
+  if (process.env.ENV === "development") {
+    return localUrl;
+  } else if (process.env.REACT_APP_ENV === "production") {
+    return onlineUrl;
   } else {
     return null;
   }
+};
+
+export const getHeaders = () => {
+  return {
+    "Access-Control-Allow-Origin": onlineUrl,
+    "Content-Type": "application/json",
+  };
 };
