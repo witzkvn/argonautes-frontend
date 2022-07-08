@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./argonaute-form.module.css";
 
-const ArgonauteForm = () => {
+const SailorForm = () => {
   return (
     <form className={styles.newMemberForm}>
       <label className={styles.newMemberFormLabel} htmlFor="name">
@@ -13,4 +13,4 @@ const ArgonauteForm = () => {
   );
 };
 
-export default ArgonauteForm;
+export default SailorForm;

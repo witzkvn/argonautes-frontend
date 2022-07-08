@@ -1,15 +1,13 @@
-import ArgonauteForm from "./components/argonaute-form/argonaute-form";
-import styles from "./App.module.css";
+import SailorForm from "./components/argonaute-form/argonaute-form";
+import SailorList from "./components/sailor-list/sailor-list";
 
 function App() {
   return (
     <>
       <h2>Ajouter un(e) Argonaute</h2>
-      <ArgonauteForm />
+      <SailorForm />
       <h2>Membres de l'équipage</h2>
-      <section className="member-list">
-        <div className={styles.memberItem}>Eleftheria</div>
-      </section>
+      <SailorList />
     </>
   );
 }
