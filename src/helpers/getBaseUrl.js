@@ -1,5 +1,5 @@
 const localUrl = "http://localhost:3001/api/v1";
-const onlineUrl = "https://argonautes-wcs-back.herokuapp.com";
+const onlineUrl = "https://argonautes-wcs-back.herokuapp.com/api/v1";
 
 export const getBaseUrl = () => {
   if (process.env.ENV === "development") {
